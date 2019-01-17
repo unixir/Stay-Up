@@ -16,20 +16,9 @@ public class GameManager : MonoBehaviour
     public float floorSpawnTime = 1f;
     int fCount = 0;
     public static int score=0;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
-        //if (instance == null)
-        //{
-        //    instance = this;
-        //}
-        //else
-        //{
-        //    Destroy(instance);
-        //}
-        //DontDestroyOnLoad(instance);
-
         score = 0;
         scoreText.text = score.ToString();
 
@@ -56,8 +45,10 @@ public class GameManager : MonoBehaviour
         deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x + 25, dFloorT.position.y, dFloorT.position.z), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
         deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x + 50, dFloorT.position.y, dFloorT.position.z), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
         deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x + 75, dFloorT.position.y, dFloorT.position.z), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
+        deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x, dFloorT.position.y, dFloorT.position.z + 25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
         GameObject dFloorAnchor = Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x + 25, dFloorT.position.y, dFloorT.position.z+25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f));
         deathFloors.Add(dFloorAnchor);
+        dFloorAnchor.name = dFloorAnchor.name + " anchor";
         //Debug.Log(dFloorAnchor.name + " spawned");
     }
 

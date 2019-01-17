@@ -12,8 +12,6 @@ public class CollectibleBehaviour : MonoBehaviour
             particleSys.Play();
             Destroy(gameObject);
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().IncreaseScore();
-            //GameManager.instance.IncreaseScore();
-            //Debug.Log(GameManager.score);
         }
     }
 }
