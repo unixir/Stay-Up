@@ -171,11 +171,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 73
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 74
+    m_MinSize: 7
+    m_MaxSize: 91
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1242,6 +1242,7 @@ MonoBehaviour:
   collectiblePrefab: {fileID: 899491450328894053, guid: 0c2c405b6bf028d46aeadf0924eee3ca,
     type: 3}
   scoreText: {fileID: 4983797}
+  scoreTextAC: {fileID: 1958232500}
   floorSpawnTime: 0.13
 --- !u!1001 &1722137889
 PrefabInstance:
@@ -1311,6 +1312,7 @@ GameObject:
   - component: {fileID: 1958232497}
   - component: {fileID: 1958232499}
   - component: {fileID: 1958232498}
+  - component: {fileID: 1958232500}
   m_Layer: 5
   m_Name: ScoreBoard
   m_TagString: Untagged
@@ -1375,6 +1377,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1958232496}
   m_CullTransparentMesh: 0
+--- !u!95 &1958232500
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958232496}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2013e35ec7e200840a33a83141b3ea6d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2044111860 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: d2debcb3c417b07419457484a835eb7d,

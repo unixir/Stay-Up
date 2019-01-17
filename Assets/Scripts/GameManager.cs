@@ -13,15 +13,16 @@ public class GameManager : MonoBehaviour
     public GameObject floorPrefab,deathFloorPrefab;
     public GameObject collectiblePrefab;
     public Text scoreText;
+    public Animator scoreTextAC;
     public float floorSpawnTime = 1f;
     int fCount = 0;
-    public static int score=0;
+    public static int score=0,highestScore;
     
     void Start()
     {
         score = 0;
         scoreText.text = score.ToString();
-
+        highestScore = SaveSystem.GetInt("HighScore");
         floors.Add(GameObject.FindGameObjectWithTag("Floor"));
         InvokeRepeating("SpawnFloor", 0f, floorSpawnTime);
         InvokeRepeating("SpawnDeathFloor", 0f, floorSpawnTime);
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         CancelInvoke();
-        if (score > SaveSystem.GetInt("HighScore"))
+        if (score > highestScore)
         {
             SaveSystem.SetInt("HighScore", score);
             SaveSystem.SaveToDisk();
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
         deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x + 50, dFloorT.position.y, dFloorT.position.z), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
         deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x + 75, dFloorT.position.y, dFloorT.position.z), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
         deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x, dFloorT.position.y, dFloorT.position.z + 25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
+        deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x-25, dFloorT.position.y, dFloorT.position.z + 25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
         GameObject dFloorAnchor = Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x + 25, dFloorT.position.y, dFloorT.position.z+25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f));
         deathFloors.Add(dFloorAnchor);
         dFloorAnchor.name = dFloorAnchor.name + " anchor";
@@ -84,5 +86,9 @@ public class GameManager : MonoBehaviour
     {
         score++;
         scoreText.text = score.ToString();
+        if (score > highestScore)
+        {
+            scoreTextAC.SetTrigger("HighlightScore");
+        }
     }
 }
