@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CollectibleBehaviour : MonoBehaviour
 {
     public ParticleSystem particleSys;
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -12,7 +11,9 @@ public class CollectibleBehaviour : MonoBehaviour
             Instantiate(particleSys, transform, false);
             particleSys.Play();
             Destroy(gameObject);
-            GameManager.instance.IncreaseScore();
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().IncreaseScore();
+            //GameManager.instance.IncreaseScore();
+            //Debug.Log(GameManager.score);
         }
     }
 }

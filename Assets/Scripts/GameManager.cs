@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,40 +9,66 @@ public class GameManager : MonoBehaviour
     public List<GameObject> lFloorPrefabs;
     public List<GameObject> rFloorPrefabs;
     public List<GameObject> floors;
-    public GameObject floor;
+    public List<GameObject> deathFloors;
+    public GameObject floorPrefab,deathFloorPrefab;
     public GameObject collectiblePrefab;
     public Text scoreText;
     public float floorSpawnTime = 1f;
-    int fCount = 0,score=0;
+    int fCount = 0;
+    public static int score=0;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(instance);
-        }
-        DontDestroyOnLoad(instance);
+        //if (instance == null)
+        //{
+        //    instance = this;
+        //}
+        //else
+        //{
+        //    Destroy(instance);
+        //}
+        //DontDestroyOnLoad(instance);
 
         score = 0;
         scoreText.text = score.ToString();
+
         floors.Add(GameObject.FindGameObjectWithTag("Floor"));
         InvokeRepeating("SpawnFloor", 0f, floorSpawnTime);
-        InvokeRepeating("DestroyFloor", 20f, 0.7f);
+        InvokeRepeating("SpawnDeathFloor", 0f, floorSpawnTime);
+        InvokeRepeating("DestroyFloors", 15f, 0.7f);
+    }
+
+    public void GameOver()
+    {
+        CancelInvoke();
+        if (score > SaveSystem.GetInt("HighScore"))
+        {
+            SaveSystem.SetInt("HighScore", score);
+            SaveSystem.SaveToDisk();
+        }
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    void SpawnDeathFloor()
+    {
+        Transform dFloorT = deathFloors[deathFloors.Count-1].transform;
+        deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x + 25, dFloorT.position.y, dFloorT.position.z), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
+        deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x + 50, dFloorT.position.y, dFloorT.position.z), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
+        deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x + 75, dFloorT.position.y, dFloorT.position.z), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
+        GameObject dFloorAnchor = Instantiate(deathFloorPrefab, new Vector3(dFloorT.position.x + 25, dFloorT.position.y, dFloorT.position.z+25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f));
+        deathFloors.Add(dFloorAnchor);
+        //Debug.Log(dFloorAnchor.name + " spawned");
     }
 
     void SpawnFloor()
     {
-        floor = floors[floors.Count-1];
-        Instantiate(collectiblePrefab, floor.transform);
-        bool isLeft=floor.GetComponent<FloorBehaviour>().isLeft;
+        floorPrefab = floors[floors.Count-1];
+        Instantiate(collectiblePrefab, floorPrefab.transform);
+        bool isLeft=floorPrefab.GetComponent<FloorBehaviour>().isLeft;
         GameObject floorPf= isLeft? rFloorPrefabs[Random.Range(0, rFloorPrefabs.Count)]: lFloorPrefabs[Random.Range(0, lFloorPrefabs.Count)];
-        Transform pos = floor.GetComponent<FloorBehaviour>().spawnPoint ;
-        Debug.Log(floorPf.name+"at pos=" + pos.position.x+"," + pos.position.y + "," + pos.position.z );
+        Transform pos = floorPrefab.GetComponent<FloorBehaviour>().spawnPoint ;
+        //Debug.Log(floorPf.name+"at pos=" + pos.position.x+"," + pos.position.y + "," + pos.position.z );
         GameObject newFloor;
         if (isLeft)
         {
@@ -56,15 +82,16 @@ public class GameManager : MonoBehaviour
         floors.Add(newFloor);
     }
 
-    void DestroyFloor()
+    void DestroyFloors()
     {
         Destroy(floors[fCount]);
+        Destroy(deathFloors[fCount]);
+        fCount++;
     }
 
     public void IncreaseScore()
     {
         score++;
-        if(scoreText!=null)
         scoreText.text = score.ToString();
     }
 }

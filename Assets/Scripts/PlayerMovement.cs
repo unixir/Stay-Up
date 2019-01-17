@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.forward*moveSpeed*Time.deltaTime);
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Jump"))
         {
             if (isGoingLeft)
             {
