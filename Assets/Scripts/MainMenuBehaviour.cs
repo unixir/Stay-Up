@@ -16,7 +16,7 @@ public class MainMenuBehaviour : MonoBehaviour
         //};
         //AnimationClip clip= panelAC.runtimeAnimatorController.animationClips[0];
         //clip.AddEvent(animationEvent);
-
+        panelAC.SetBool("PanelVisible", false);
         HighScoreText.text = SaveSystem.GetInt("HighScore").ToString();
         if (HighScoreText.text == "0")
         {
@@ -26,13 +26,13 @@ public class MainMenuBehaviour : MonoBehaviour
     public void PlayGame()
     {
         Debug.Log("In playgame");
-        panelAC.SetTrigger("FadeIn");
+        panelAC.SetBool("PanelVisible",true);
         Invoke("LoadGame", 0.5f);
     }
 
     public void LoadGame()
     {
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("Game");
     }
 
     public void ExitGame()

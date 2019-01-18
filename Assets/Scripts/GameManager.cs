@@ -13,13 +13,14 @@ public class GameManager : MonoBehaviour
     public GameObject floorPrefab,deathFloorPrefab;
     public GameObject collectiblePrefab;
     public Text scoreText;
-    public Animator scoreTextAC;
+    public Animator scoreTextAC, panelAC;
     public float floorSpawnTime = 1f;
     int fCount = 0;
     public static int score=0,highestScore;
     
     void Start()
     {
+        panelAC.SetBool("PanelVisible",false);
         score = 0;
         scoreText.text = score.ToString();
         highestScore = SaveSystem.GetInt("HighScore");
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
             SaveSystem.SetInt("HighScore", score);
             SaveSystem.SaveToDisk();
         }
+        panelAC.SetBool("PanelVisible", true);
         SceneManager.LoadScene("MainMenu");
     }
 
