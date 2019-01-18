@@ -14,6 +14,7 @@ public class DeathFloorBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            other.GetComponent<PlayerMovement>().PlayerDeathSound();
             gameManager.GameOver();
         }
     }

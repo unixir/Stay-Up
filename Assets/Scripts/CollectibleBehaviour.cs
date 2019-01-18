@@ -8,6 +8,7 @@ public class CollectibleBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            other.GetComponent<PlayerMovement>().PlayerCollectSound();
             Instantiate(particleSys, transform, false);
             particleSys.Play();
             Destroy(gameObject);

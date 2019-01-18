@@ -5,9 +5,31 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
     public float moveSpeed;
     bool isGoingLeft = false;
+    AudioSource audioSource;
+    public AudioClip collectSound, playerDeath;
+    public float difficultyTime=20f,speedIncrease=0.1f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
+        InvokeRepeating("IncreaseDifficulty", difficultyTime, difficultyTime);
+    }
+
+    void IncreaseDifficulty()
+    {
+        moveSpeed = +speedIncrease;
+    }
+
+    public void PlayerCollectSound()
+    {
+        audioSource.PlayOneShot(collectSound);
+    }
+
+    public void PlayerDeathSound()
+    {
+        if(audioSource.clip!=playerDeath)
+        audioSource.PlayOneShot(playerDeath);
     }
 
     void Update()

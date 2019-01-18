@@ -12,11 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RFloorLarge
       objectReference: {fileID: 0}
-    - target: {fileID: 1597122489208301832, guid: dbe58e8482516ee4c92fcd344149de34,
-        type: 3}
-      propertyPath: isLeft
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5070242864927364539, guid: dbe58e8482516ee4c92fcd344149de34,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -72,10 +67,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1597122489208301832, guid: dbe58e8482516ee4c92fcd344149de34,
+        type: 3}
+      propertyPath: isLeft
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3512546830653633492, guid: dbe58e8482516ee4c92fcd344149de34,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.48
+      value: 13.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3512546830653633492, guid: dbe58e8482516ee4c92fcd344149de34,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1419727944226701512, guid: dbe58e8482516ee4c92fcd344149de34,
         type: 3}

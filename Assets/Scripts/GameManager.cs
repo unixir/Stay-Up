@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public Animator scoreTextAC, panelAC;
     public float floorSpawnTime = 1f;
     int fCount = 0;
-    public static int score=0,highestScore;
+    public static int score=0,highestScore,collectibleCount=0;
     
     void Start()
     {
@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour
             SaveSystem.SaveToDisk();
         }
         panelAC.SetBool("PanelVisible", true);
+        Invoke("LoadScene", 1.5f);
+    }
+
+    void LoadScene()
+    {
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -59,7 +64,9 @@ public class GameManager : MonoBehaviour
     void SpawnFloor()
     {
         floorPrefab = floors[floors.Count-1];
-        Instantiate(collectiblePrefab, floorPrefab.transform);
+        if (collectibleCount > 0)
+            Instantiate(collectiblePrefab, floorPrefab.transform);
+        collectibleCount++;
         bool isLeft=floorPrefab.GetComponent<FloorBehaviour>().isLeft;
         GameObject floorPf= isLeft? rFloorPrefabs[Random.Range(0, rFloorPrefabs.Count)]: lFloorPrefabs[Random.Range(0, lFloorPrefabs.Count)];
         Transform pos = floorPrefab.GetComponent<FloorBehaviour>().spawnPoint ;
