@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     void IncreaseDifficulty()
     {
-        moveSpeed = +speedIncrease;
+        moveSpeed += speedIncrease;
     }
 
     public void PlayerCollectSound()
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.forward*moveSpeed*Time.deltaTime);
-        if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             if (isGoingLeft)
             {
@@ -46,6 +46,22 @@ public class PlayerMovement : MonoBehaviour
             {
                 transform.Rotate(0, -90, 0);
                 isGoingLeft = true;
+            }
+        }
+        if (Input.touchCount > 0)
+        {
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                if (isGoingLeft)
+                {
+                    transform.Rotate(0, 90, 0);
+                    isGoingLeft = false;
+                }
+                else
+                {
+                    transform.Rotate(0, -90, 0);
+                    isGoingLeft = true;
+                }
             }
         }
     }

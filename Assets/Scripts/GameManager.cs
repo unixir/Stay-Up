@@ -27,7 +27,31 @@ public class GameManager : MonoBehaviour
         floors.Add(GameObject.FindGameObjectWithTag("Floor"));
         InvokeRepeating("SpawnFloor", 0f, floorSpawnTime);
         InvokeRepeating("SpawnDeathFloor", 0f, floorSpawnTime);
-        InvokeRepeating("DestroyFloors", 15f, 0.7f);
+        InvokeRepeating("DestroyFloors", 20f, 0.7f);
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void UnpauseGame()
+    {
+        Debug.Log("in unpause game");
+        Time.timeScale = 1f;
+    }
+
+    public void ShowMenu()
+    {
+        Time.timeScale = 1f;
+        panelAC.SetBool("PanelVisible", true);
+        Invoke("LoadScene", 0f);
+    }
+
+
+    public void DisableCameraMovement()
+    {
+        Camera.main.GetComponent<CameraMovement>().enabled = false;
     }
 
     public void GameOver()
