@@ -8,20 +8,30 @@ public class MainMenuBehaviour : MonoBehaviour
     public TextMeshProUGUI HighScoreText;
     public SaveSystemSetup saveSystemSetup;
     public Animator panelAC;
+    public Toggle soundToggle;
+    public AudioSource[] audioSources;
     private void Start()
     {
-        //AnimationEvent animationEvent = new AnimationEvent
-        //{
-        //    functionName = "LoadGame"
-        //};
-        //AnimationClip clip= panelAC.runtimeAnimatorController.animationClips[0];
-        //clip.AddEvent(animationEvent);
+        if (SaveSystem.GetBool("SoundOn") != null)
+            soundToggle.isOn = SaveSystem.GetBool("SoundOn");
+        else
+            SaveSystem.SetBool("SoundOn", true);
         panelAC.SetBool("PanelVisible", false);
         HighScoreText.text = SaveSystem.GetInt("HighScore").ToString();
         if (HighScoreText.text == "0")
         {
             SaveSystem.SetInt("HighScore", 0);
         }
+    }
+
+    public void SoundChange()
+    {
+        SaveSystem.SetBool("SoundOn", soundToggle.isOn);
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.volume = soundToggle.isOn ? 1 : 0;
+        }
+        SaveSystem.SaveToDisk();
     }
     public void PlayGame()
     {

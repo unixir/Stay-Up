@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+    public Toggle soundToggle;
+    public AudioSource[] audioSources;
     public List<GameObject> lFloorPrefabs;
     public List<GameObject> rFloorPrefabs;
     public List<GameObject> floors;
@@ -20,6 +22,8 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        soundToggle.isOn= SaveSystem.GetBool("SoundOn");
+        SoundChange();
         collectibleCount = 0;
         panelAC.SetBool("PanelVisible",false);
         score = 0;
@@ -29,6 +33,16 @@ public class GameManager : MonoBehaviour
         InvokeRepeating("SpawnFloor", 0f, floorSpawnTime);
         //InvokeRepeating("SpawnDeathFloor", 0f, floorSpawnTime);
         InvokeRepeating("DestroyFloors", 20f, 1f);
+    }
+
+    public void SoundChange()
+    {
+        SaveSystem.SetBool("SoundOn", soundToggle.isOn);
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.volume = soundToggle.isOn ? 1 : 0;
+        }
+        SaveSystem.SaveToDisk();
     }
 
     public void PauseGame()
