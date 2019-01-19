@@ -9,8 +9,8 @@ public class CollectibleBehaviour : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerMovement>().PlayerCollectSound();
-            Instantiate(particleSys, transform, false);
-            particleSys.Play();
+            ParticleSystem particleSystem = Instantiate(particleSys, transform.position, Quaternion.identity);
+            particleSystem.Play();
             Destroy(gameObject);
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().IncreaseScore();
         }

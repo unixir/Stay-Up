@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        collectibleCount = 0;
         panelAC.SetBool("PanelVisible",false);
         score = 0;
         scoreText.text = score.ToString();
@@ -108,22 +109,25 @@ public class GameManager : MonoBehaviour
 
         floors.Add(newFloor);
 
-        Transform nearestDFloor = FindNearestDeathFloor(newFloor.transform, 5);
+        Transform nearestDFloor = FindNearestDeathFloor(newFloor.transform, 6);
         if (nearestDFloor.position.x < newFloor.transform.position.x && nearestDFloor.position.z < newFloor.transform.position.z)
         {
+            deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(nearestDFloor.position.x - 25, nearestDFloor.position.y, nearestDFloor.position.z - 50), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
             deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(nearestDFloor.position.x, nearestDFloor.position.y, nearestDFloor.position.z + 25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
             deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(nearestDFloor.position.x + 25, nearestDFloor.position.y, nearestDFloor.position.z + 25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
             deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(nearestDFloor.position.x + 50, nearestDFloor.position.y, nearestDFloor.position.z + 25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
             deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(nearestDFloor.position.x + 75, nearestDFloor.position.y, nearestDFloor.position.z + 25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
+            deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(nearestDFloor.position.x + 100, nearestDFloor.position.y, nearestDFloor.position.z + 25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
             deathFloors.Add(Instantiate(deathFloorPrefab, new Vector3(nearestDFloor.position.x - 25, nearestDFloor.position.y, nearestDFloor.position.z + 25), deathFloorPrefab.transform.rotation * Quaternion.Euler(0f, 0f, 0f)));
         }
     }
 
     Transform FindNearestDeathFloor(Transform floorTransform,int iterations)
     {
+        //Take the last Dfloor in the list
         Transform nearestDFloor = deathFloors[deathFloors.Count - 1].transform;
-        float leastDist = 0;
-        leastDist = Vector3.Distance(floorTransform.position, deathFloors[deathFloors.Count - 1].transform.position);
+        //Initialize least distance
+        float leastDist = Vector3.Distance(floorTransform.position, nearestDFloor.position);
         for (int i = 2; i <= iterations; i++)
         {
             if (leastDist > Vector3.Distance(floorTransform.position, deathFloors[deathFloors.Count - i].transform.position))

@@ -2570,7 +2570,7 @@ MonoBehaviour:
   floorPrefab: {fileID: 0}
   deathFloorPrefab: {fileID: 987189646485705125, guid: 4d023fbe44c80244397d64e1c6627f34,
     type: 3}
-  collectiblePrefab: {fileID: 899491450328894053, guid: 0c2c405b6bf028d46aeadf0924eee3ca,
+  collectiblePrefab: {fileID: 6779533468252780104, guid: 8cbeaae999cafbc43bda831df8e00d94,
     type: 3}
   scoreText: {fileID: 4983797}
   scoreTextAC: {fileID: 1958232500}
